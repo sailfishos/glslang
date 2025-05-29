@@ -1,14 +1,11 @@
 Name:           glslang
-Version:        14.1.0
+Version:        15.3.0
 Release:        1
 Summary:        OpenGL and OpenGL ES shader front end and validator
 
 License:        BSD and GPLv3+ and ASL 2.0
 URL:            https://github.com/KhronosGroup/glslang
 Source0:        %{name}-%{version}.tar.gz
-# Patch to build against system spirv-tools (rebased locally)
-#Patch1:         https://patch-diff.githubusercontent.com/raw/KhronosGroup/glslang/pull/1722.patch#/0001-pkg-config-compatibility.patch
-Patch1:         0001-pkg-config-compatibility.patch
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
@@ -36,7 +33,7 @@ interpretation of the specifications for these languages.
 find . -name '*.h' -or -name '*.cpp' -or -name '*.hpp'| xargs chmod a-x
 
 %build
-%cmake -DBUILD_SHARED_LIBS=OFF -DENABLE_HLSL=OFF
+%cmake -DBUILD_SHARED_LIBS=OFF -DENABLE_HLSL=OFF -DENABLE_OPT=OFF
 %cmake_build
 
 %install
@@ -70,6 +67,4 @@ install -pm 0644 SPIRV/libSPIRV.a %{buildroot}%{_libdir}/
 %{_libdir}/libGenericCodeGen.a
 %{_libdir}/libMachineIndependent.a
 %{_libdir}/libglslang-default-resource-limits.a
-%{_libdir}/pkgconfig/glslang.pc
-%{_libdir}/pkgconfig/spirv.pc
 %{_libdir}/cmake/*
